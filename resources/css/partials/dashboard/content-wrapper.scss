@@ -1,0 +1,9 @@
+#content-wrapper {
+    @apply flex flex-col pt-28
+    xl:flex-row xl:flex-wrap;
+
+    #main-content {
+        @apply w-full
+        xl:pl-16 xl:w-4/5;
+    }
+}

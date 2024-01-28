@@ -1,0 +1,16 @@
+#content-wrapper {
+    #sidebar {
+        @apply bg-white border-t border-t-stone-300 fixed hidden h-[calc(100vh-72px)] left-0 px-6 py-10 top-[72px] w-9/12
+        xl:block xl:static xl:w-1/5;
+
+        ul {
+            li {
+                @apply py-2;
+
+                a {
+                    
+                }
+            }
+        }
+    }
+}

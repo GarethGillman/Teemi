@@ -1,0 +1,6 @@
+@import 'partials/tailwind.css';
+@import 'partials/dashboard/body.scss';
+@import 'partials/dashboard/navigation.scss';
+
+@import 'partials/dashboard/content-wrapper.scss';
+@import 'partials/dashboard/sidebar.scss';
