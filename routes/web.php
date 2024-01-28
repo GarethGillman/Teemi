@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\MembershipsController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
@@ -35,6 +36,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    // Comments
+    Route::get('/dashboard/comments', [CommentsController::class, 'index'])->name('memberships.index');
+    Route::get('/dashboard/comments/add', [CommentsController::class, 'create'])->name('memberships.create');
+    Route::post('/dashboard/comments/save', [CommentsController::class, 'save'])->name('memberships.save');
+    Route::get('/dashboard/comments/edit', [CommentsController::class, 'edit'])->name('memberships.update');
+    Route::post('/dashboard/comments/update', [CommentsController::class, 'update'])->name('memberships.update');
+    Route::get('/dashboard/comments/delete', [CommentsController::class, 'destroy'])->name('memberships.delete');
 
     // Memberships
     Route::get('/dashboard/memberships', [MembershipsController::class, 'index'])->name('memberships.index');
