@@ -28,7 +28,21 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'userid' => ['required', 'string', 'max:100'],
+            'postid' => ['required', 'string', 'max:160'],
+            'comment' => ['required', 'string']
+        ]);
+
+        $membership = Memberships::create([
+            'userid' => $request->userid,
+            'postid' => $request->postid,
+            'comment' => $request->comment,
+        ]);
+
+        event(new Registered($comments));
+
+        return back()->with('status', 'Commment Added');
     }
 
     /**

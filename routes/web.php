@@ -39,9 +39,7 @@ Route::middleware('auth')->group(function () {
 
     // Comments
     Route::get('/dashboard/comments', [CommentsController::class, 'index'])->name('memberships.index');
-    Route::get('/dashboard/comments/add', [CommentsController::class, 'create'])->name('memberships.create');
     Route::post('/dashboard/comments/save', [CommentsController::class, 'save'])->name('memberships.save');
-    Route::get('/dashboard/comments/edit', [CommentsController::class, 'edit'])->name('memberships.update');
     Route::post('/dashboard/comments/update', [CommentsController::class, 'update'])->name('memberships.update');
     Route::get('/dashboard/comments/delete', [CommentsController::class, 'destroy'])->name('memberships.delete');
 

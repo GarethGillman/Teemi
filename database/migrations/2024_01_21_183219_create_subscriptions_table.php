@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('userid');
             $table->string('teamid');
-            $table->integer('subscription_id');
+            $table->integer('membership_id');
             $table->string('status');
             $table->timestamps();
         });

@@ -66,7 +66,8 @@ $date_time = $today_date.'T'.$today_time;
                 <x-input-label for="visibility" :value="__('Post Visibility')" />
                 <select name="visibility">
                     <option selected value="all" >all</option>
-                    <option value="members">Members</option>
+                    <option value="members">Members only</option>
+                    <option value="followers">Followers Only</option>
                 </select>
             </div>
 
@@ -84,6 +85,7 @@ $date_time = $today_date.'T'.$today_time;
                 <select name="commenting">
                     <option selected value="on" >On</option>
                     <option value="members">Members Only</option>
+                    <option value="followers">Followers Only</option>
                     <option value="off">Off</option>
                 </select>
             </div>

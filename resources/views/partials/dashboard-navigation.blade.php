@@ -3,7 +3,7 @@ $user_verified = auth()->user()->verified;
 @endphp
 
 <nav id="header-navigation">
-    <div class="container">
+    <div class="container mx-auto px-8">
         
         @if( $user_verified  == 'true' )
             <div class="-me-2 flex items-center sm:hidden">

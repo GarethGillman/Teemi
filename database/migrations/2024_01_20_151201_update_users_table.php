@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('sport')->nullable();
             $table->string('staffid')->nullable();
             $table->string('firstlogin');
+            $table->string('following');
         });
     }
 

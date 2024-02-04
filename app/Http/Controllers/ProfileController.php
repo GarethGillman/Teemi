@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Posts;
 use App\Models\User;
 use App\Models\Memberships;
+use App\Models\Subscriptions;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -18,19 +19,72 @@ class ProfileController extends Controller
 
     public function profile(Request $request): View
     {
+        $profile_user_id = User::where('userslug', '=', $request->id)->pluck('id');
+        $profile_user = User::where('userslug', '=', $request->id)->first();
 
-        $user_id = User::where('userslug', '=', $request->id)->pluck('id');
+        if( $profile_user ) {
+            $memberships = Memberships::where('userid', '=', $profile_user_id)->count();
 
-        $user = User::where('userslug', '=', $request->id)->first();
+            if( auth()->check() ) {
 
-        if( $user ) {
-            $memberships = Memberships::where('userid', '=', $user_id)->count();
-            $posts = Posts::where('userid', '=', $user_id)->get();
+                // Logged In
+                $logged_user_id = auth()->user()->id;
+                $user_following = auth()->user()->following;
+                $user_following_array = explode(",", $user_following);
+                $user_subscriptions = Subscriptions::where('teamid', '=', $profile_user_id)->count();
+
+                // Set following status
+                if( in_array($logged_user_id, $user_following_array) ) {
+                    $following_profile = 'true';
+                } else {
+                    $following_profile = 'false';
+                }
+
+                // Check if subsription
+                if( $user_subscriptions > 0 ) {
+                    if( in_array($logged_user_id, $user_following_array) ) {
+                        // Member and Follower
+                        $posts = Posts::where('userid', '=', $profile_user_id)
+                            ->where('visibility', '=', 'all')
+                            ->where('visibility', '=', 'members')
+                            ->where('visibility', '=', 'followers')
+                            ->get();
+                    } else {
+                        // Member only
+                        $posts = Posts::where('userid', '=', $profile_user_id)
+                            ->where('visibility', '=', 'all')
+                            ->where('visibility', '=', 'members')
+                            ->get();
+                    }
+                } else {
+                    if( in_array($logged_user_id, $user_following_array) ) {
+                        // Follower
+                        $posts = Posts::where('userid', '=', $profile_user_id)
+                            ->where('visibility', '=', 'all')
+                            ->where('visibility', '=', 'followers')
+                            ->get();
+                    } else {
+                        // Non Follower
+                        $posts = Posts::where('userid', '=', $profile_user_id)
+                            ->where('visibility', '=', 'all')
+                            ->get();
+                    }
+                }
+                
+            } else {
+                // Not Logged In
+                $following_profile = 'false';
+
+                $posts = Posts::where('userid', '=', $profile_user_id)
+                    ->where('visibility', '=', 'all')
+                    ->get();
+            }            
 
             return view('profile.view', [
-                'user' => $user,
+                'user' => $profile_user,
                 'memberships' => $memberships,
-                'posts' => $posts
+                'posts' => $posts,
+                'following' => $following_profile,
             ]);
         } else {
             return view('profile.error', [

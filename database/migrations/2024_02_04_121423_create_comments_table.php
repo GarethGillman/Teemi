@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('userid');
             $table->integer('postid');
             $table->longText('comment');
+            $table->string('deleted');
             $table->string('spam');
             $table->string('hidden');
             $table->timestamps();

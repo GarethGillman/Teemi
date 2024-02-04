@@ -67,6 +67,7 @@ $date_time = $today_date.'T'.$today_time;
                 <select name="visibility">
                     <option @if( $post->status == 'all')selected @endif value="all">All</option>
                     <option @if( $post->status == 'members')selected @endif value="members">Members</option>
+                    <option @if( $post->status == 'followers')selected @endif value="followers">Followers Only</option>
                 </select>
             </div>
 
@@ -84,6 +85,7 @@ $date_time = $today_date.'T'.$today_time;
                 <select name="commenting">
                     <option @if( $post->commenting == 'on')selected @endif value="on" >On</option>
                     <option @if( $post->commenting == 'members')selected @endif value="members">Members Only</option>
+                    <option @if( $post->status == 'followers')selected @endif value="followers">Followers Only</option>
                     <option @if( $post->commenting == 'off')selected @endif value="off">Off</option>
                 </select>
             </div>

@@ -16,14 +16,17 @@
 
                     {{ $post->created_at }}
 
-                    {{ $post->excerpt }}
+                    {{ $post->description }}
 
-                    {{ $post->excerpt}}
+                </div>
+
+                <div id="comments-wrapper">
+                    @php
+                    $comments = DB::table('comments')->where('postid', '=', $post->id)->get();
+                    @endphp
                 </div>
             @endforeach
         </div>
-
-        <div id="comments-wrapper"></div>
 
     </div>
 </section>

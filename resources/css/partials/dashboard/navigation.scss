@@ -3,7 +3,7 @@
     bg-white fixed left-0 py-4 top-0 w-full z-[9999];
 
     .container {
-        @apply flex flex-row flex-wrap items-center justify-between px-4;
+        @apply flex flex-row flex-wrap items-center justify-between;
 
         #user-dropdown {
             @apply sm:flex sm:items-center sm:ms-6;

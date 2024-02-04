@@ -6,19 +6,12 @@ $user_id = auth()->user()->id;
 @if( $user_type  == 'team' || $user_type == 'individual' )
 
     <x-app-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Posts') }}
-            </h2>
-        </x-slot>
+    
+        <div class="container flex flex-col gap-8 mx-auto px-8 lg:flex-row lg:flex-wrap lg:gap-0 lg:justify-between">
 
-        <div class="flex flex-col gap-8 py-12 lg:flex-row lg:flex-wrap lg:gap-0">
+            <x-widgets.dashboard-menu />
 
-            <div class="sidebar w-full lg:pr-4 lg:w-4/12">
-                <x-widgets.dashboard-menu />
-            </div>
-
-            <div class="content w-full lg:pl-4 lg:w-8/12">
+            <div class="content w-full lg:pl-6 lg:w-4/5">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden p-6 shadow-sm sm:rounded-lg">
 
                     @session('status')
@@ -34,27 +27,30 @@ $user_id = auth()->user()->id;
                     @endsession
                 
                     @if( $posts_count > 0 )
-                        <h3>Posts</h3>
-                        <a class="btn" href="{{ route('posts.create') }}">Add Post</a>
 
-                        <table>
+                        <div class="flex flex-row justify-between mb-6">
+                            <h3>Posts</h3>
+                            <a class="btn" href="{{ route('posts.create') }}">Add Post</a>
+                        </div>
+
+                        <table class="text-left w-full">
                             <thead>
-                                <th>ID</th>
+                                <th class="hidden md:block">ID</th>
                                 <th>Name</th>
                                 <th>Type</th>
-                                <th>Created</th>
+                                <th class="hidden md:block">Created</th>
                                 <th>Status</th>
                                 <th></th>
                             </thead>
                             <tbody>
                                 @foreach( $posts as $post )
                                     <tr>
-                                        <td>{{ $post->id }}</td>
+                                        <td class="hidden md:block">{{ $post->id }}</td>
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->type }}</td>
-                                        <td>{{ $post->created_at }}</td>
+                                        <td class="hidden md:block">{{ $post->created_at }}</td>
                                         <td>{{ $post->status }}</td>
-                                        <td>
+                                        <td class="flex flex-row justify-between md:gap-4 md:justify-end">
                                             <a class="btn" href="{{ route('posts.edit', ['id' => $post->id]) }}">Edit</a>
                                             <a class="btn" href="{{ route('posts.delete', ['id' => $post->id]) }}">Delete</a>
                                         </td>

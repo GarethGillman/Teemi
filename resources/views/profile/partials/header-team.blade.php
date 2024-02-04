@@ -22,7 +22,12 @@
             </div>
             <div class="flex flex-col gap-3" id="profile-tasks">
                 <a class="btn" href="#">Message</a>
-                <a class="btn" href="#">Follow</a>
+
+                @if( $following == 'true' )
+                    <a class="btn" href="#">Unfollow</a>
+                @else
+                    <a class="btn" href="#">Follow</a>
+                @endif
 
                 @if( $memberships > 0 )
                     <a class="btn" href="#">Memberships</a>
