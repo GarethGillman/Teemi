@@ -1,3 +1,7 @@
+@php
+$logged_user = Auth::id();
+@endphp
+
 <header id="team-header">
     <div class="container mx-auto px-10">
         
@@ -20,18 +24,29 @@
                     <li>Tiktok</li>
                 </ul>
             </div>
+
             <div class="flex flex-col gap-3" id="profile-tasks">
-                <a class="btn" href="#">Message</a>
+                
+                @auth
 
-                @if( $following == 'true' )
-                    <a class="btn" href="#">Unfollow</a>
-                @else
-                    <a class="btn" href="#">Follow</a>
-                @endif
+                    @if( $user->id != $logged_user )
 
-                @if( $memberships > 0 )
-                    <a class="btn" href="#">Memberships</a>
-                @endif
+                        @if( $user->id != $logged_user )
+                            <a class="btn" href="#">Message</a>
+
+                            @if( $following == 'true' )
+                                <a class="btn" href="#">Unfollow</a>
+                            @else
+                                <a class="btn" href="{{ route('profile.follow', $user->id) }}">Follow</a>
+                            @endif
+                
+                            @if( $memberships > 0 )
+                                <a class="btn" href="#">Memberships</a>
+                            @endif
+                        @endif
+                    @endif
+
+                @endauth
             </div>
         </div>
 

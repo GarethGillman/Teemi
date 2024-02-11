@@ -139,4 +139,55 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Follow a team
+     */
+    public function follow(Request $request)
+    {
+        $profile_user = User::where('id', '=', $request->id)->get();
+        $logged_user = Auth::user();
+
+        if( $profile_user && $logged_user ) {
+            $user_following = $logged_user->following;
+
+            if( !empty( $user_following ) ) {
+                $following_ids = $logged_user->following;
+                array_push($following_ids, $profile_user->id);
+                User::where('id', $logged_user->id)
+                    ->update(['following' => $following_ids]);
+            } else {
+                $following_ids = array();
+                array_push($following_ids, $profile_user->id);
+                User::where('id', $logged_user->id)
+                    ->update(['following' => $following_ids]);
+            }
+        }
+        
+        return back()->with('status', 'Now following '. $profile_user->name);
+    }
+
+    /**
+     * Unfollow a team
+     */
+    public function unfollow(Request $request)
+    {
+        $profile_user = User::where('id', '=', $request->id)->get();
+        $logged_user = Auth::user();
+
+        if( $profile_user && $logged_user ) {
+            $user_following = $logged_user->following;
+
+            if( !empty( $user_following ) ) {
+                $following_ids = $logged_user->following;
+                array_push($following_ids, $profile_user->id);
+                User::where('id', $logged_user->id)
+                    ->update(['following' => $following_ids]);
+
+                return back()->with('status', 'Now following '. $profile_user->name);
+            } else {
+                return back();
+            }
+        }
+    }
 }
